@@ -17,10 +17,19 @@ export default {
   // ],
 
   // Content to add to the head of the page, e.g. for a favicon:
-  head: '<link rel="icon" href="observable.png" type="image/png" sizes="32x32">',
+  head: `
+    <link rel="icon" href="observable.png" type="image/png" sizes="32x32">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+      :root { --sans-serif: "Roboto", sans-serif; }
+    </style>
+  `,
 
   // The path to the source root.
   root: "src",
+
+  theme: "air",  // clean light theme — good for WordPress iframe embedding
 
   // Some additional configuration options and their defaults:
   // theme: "default", // try "light", "dark", "slate", etc.
