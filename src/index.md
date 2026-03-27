@@ -6,7 +6,12 @@ const labor_market_outcomes = FileAttachment(
 ).csv();
 ```
 
-This could be some blog post text!
+### Headline: overall teacher retention remains stable, but the devil is in the details.
+
+Key points:
+
+- Combined retention numbers (Stayers + Movers) remain the same as last year. This means taht roughly the same proportion of teachers entered and exited.
+- Switcher rates decreased further in 2025-26, providing evidence of an adjustment to pre-pandemic levels after the expiration of ESSER funds.
 
 ```js
 const categories = [
