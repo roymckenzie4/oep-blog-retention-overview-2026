@@ -78,14 +78,3 @@ graph_data <- teacher_lm %>%
 
 # --- Write to stdout as CSV ---
 write.csv(graph_data, stdout(), row.names = FALSE)
-
-# graph_data %>%
-#   mutate(
-#     era = case_when(
-#       schoolyear %in% c("2014-15", "2015-16", "2016-17", "2017-18", "2018-19", "2019-20") ~ "pre",
-#       schoolyear == "2025-26" ~ "2025-26",
-#       TRUE ~ "post"
-#     )
-#   ) %>%
-#   group_by(era, category) %>%
-#   summarize(avg = mean(value))
