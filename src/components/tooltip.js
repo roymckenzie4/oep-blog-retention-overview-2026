@@ -31,7 +31,7 @@ import { html } from "npm:htl";
  *     format: (d) => `<strong>${d.district_name}</strong>`,
  *   });
  */
-export function attachTooltip(chart, points, { x, y = null, format, maxDist = 40 }) {
+export function attachTooltip(chart, points, { x, y = null, format, maxDist = 40, defaultTipY = 28 }) {
   const xScale = chart.scale("x");
   const yScale = y ? chart.scale("y") : null;
 
@@ -103,7 +103,7 @@ export function attachTooltip(chart, points, { x, y = null, format, maxDist = 40
     tip.style.left = `${left}px`;
 
     // Vertical: above data point (both modes), flip below if it would clip the top
-    const tipY = nearest.py ?? 28;
+    const tipY = nearest.py ?? defaultTipY;
     let top = tipY - tip.offsetHeight - 10;
     if (top < 8) top = tipY + 10;
     tip.style.top = `${top}px`;

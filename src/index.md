@@ -46,7 +46,64 @@ The overall retention rate of 87.3 percent counts both Movers and Stayers, since
 
 Retirements are not driving the decline in retention rates. In 2025-26, approximately 2.7 percent of teachers retired. This mirrors last year's rate exactly, and sits slightly below pre-pandemic levels.
 
-![](images/draft_plots/switcher_exiter_retired_change_from_base_plot_draft.svg)
+```js
+import { changeFromBaselineChart } from "./components/change-from-baseline-chart.js";
+import * as d3 from "npm:d3";
+
+// Pre-pandemic school years used as the baseline for change calculations
+const PRE_PANDEMIC_YEARS = new Set([
+  "2014-15", "2015-16", "2016-17", "2017-18", "2018-19", "2019-20",
+]);
+
+// Transforms raw labor-market-outcomes data into { x, category, change } rows
+// for a change-from-baseline chart. Pre-pandemic years are averaged into a
+// single "Pre-pandemic avg." baseline point (change = 0 by definition).
+// Post-pandemic years show the pp delta from that baseline.
+function computeBaselineDeltas(data, categoryLabels) {
+  const filtered = data.filter((d) => categoryLabels.includes(d.category));
+
+  // Per-category baseline: mean of pre-pandemic values
+  const baselines = {};
+  for (const label of categoryLabels) {
+    const preRows = filtered.filter(
+      (d) => d.category === label && PRE_PANDEMIC_YEARS.has(d.schoolyear),
+    );
+    baselines[label] = d3.mean(preRows, (d) => +d.value);
+  }
+
+  // Map rows to { x, category, change }, collapsing pre-pandemic years to one point
+  const transformed = [];
+  const seenBaseline = new Set();
+  for (const row of [...filtered].sort((a, b) =>
+    a.schoolyear.localeCompare(b.schoolyear),
+  )) {
+    if (PRE_PANDEMIC_YEARS.has(row.schoolyear)) {
+      if (!seenBaseline.has(row.category)) {
+        seenBaseline.add(row.category);
+        transformed.push({ x: "Pre-pandemic avg.", category: row.category, change: 0 });
+      }
+    } else {
+      transformed.push({
+        x: row.schoolyear,
+        category: row.category,
+        change: +row.value - baselines[row.category],
+      });
+    }
+  }
+  return transformed;
+}
+
+const departureCategories = [
+  { label: "Exiter", color: "#B2182B" },
+  { label: "Retired", color: "#67001F" },
+  { label: "Switcher", color: "#F4A582" },
+];
+const departureDelta = computeBaselineDeltas(
+  labor_market_outcomes,
+  departureCategories.map((c) => c.label),
+);
+display(changeFromBaselineChart(departureDelta, departureCategories));
+```
 
 Instead, exits among early- and mid-career teachers are likely keeping teacher retention rates low. This year, roughly 6.4 percent of teachers exited the workforce for non-retirement reasons. This remains over 1 pp higher than before the pandemic, and shows no decline from the past three years.
 
@@ -58,7 +115,18 @@ Last year, we discussed how the January 2025 expiration of Federal ESSER (Elemen
 
 In 2025-26, a larger proportion of teachers remained in the same school than at any time in the last five years. The Stayer rate rose to 77.1 percent this year, up .8 pp from 2024-25 and almost 3 pp from the low-water mark of 2022-23.
 
-![](images/draft_plots/stayers_movers_change_from_base_plot_draft.svg)
+```js
+const retainedCategories = [
+  { label: "Stayer", color: "#053061" },
+  { label: "Mover - Same District", color: "#2166AC" },
+  { label: "Mover - New District", color: "#92C5DE" },
+];
+const retainedDelta = computeBaselineDeltas(
+  labor_market_outcomes,
+  retainedCategories.map((c) => c.label),
+);
+display(changeFromBaselineChart(retainedDelta, retainedCategories));
+```
 
 As more teachers stayed, fewer moved to new districts. Only 4.9 percent of teachers taught in a new district this year, a .8 pp decrease from 2024-25. This means that even as statewide retention held steady, the teachers who stayed were more likely to stay in their own district - a sign of growing stability within schools.
 
