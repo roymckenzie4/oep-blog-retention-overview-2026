@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="generator" content="Observable Framework v1.13.4">
+<title>Arkansas Teacher Retention 2025-26: A New Normal | Teacher Retention in Arkansas</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="preload" as="style" href="./_observablehq/theme-air.d5b7fcbe.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="./_observablehq/theme-air.d5b7fcbe.css">
+<link rel="modulepreload" href="./_observablehq/client.e29ec344.js">
+<link rel="modulepreload" href="./_observablehq/runtime.607a8173.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.277aeab8.js">
+<link rel="modulepreload" href="./_import/components/retention-rate-chart.c6288782.js">
+<link rel="modulepreload" href="./_import/components/retention-bar-chart.c2b9def0.js">
+<link rel="modulepreload" href="./_import/components/change-from-baseline-chart.80c2a07b.js">
+<link rel="modulepreload" href="./_npm/d3@7.9.0/66d82917.js">
+<link rel="modulepreload" href="./_import/components/district-scatter-chart.12f39ae1.js">
+<link rel="modulepreload" href="./_import/components/district-map.1ae56aab.js">
+<link rel="modulepreload" href="./_import/components/district-card.12f70cea.js">
+<link rel="modulepreload" href="./_npm/htl@0.3.1/72f4716c.js">
+<link rel="modulepreload" href="./_import/components/tooltip.169ffc84.js">
+<link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.17/a96a6bbb.js">
+<link rel="modulepreload" href="./_import/components/utils.dd133555.js">
+<link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/9cffc2bd.js">
+<link rel="modulepreload" href="./_npm/d3-array@3.2.4/e93ca09f.js">
+<link rel="modulepreload" href="./_npm/d3-axis@3.0.0/0f2de24d.js">
+<link rel="modulepreload" href="./_npm/d3-brush@3.0.0/65eb105b.js">
+<link rel="modulepreload" href="./_npm/d3-chord@3.0.1/7ef8fb2e.js">
+<link rel="modulepreload" href="./_npm/d3-color@3.1.0/aeb57b94.js">
+<link rel="modulepreload" href="./_npm/d3-contour@4.0.2/1d2aed74.js">
+<link rel="modulepreload" href="./_npm/d3-delaunay@6.0.4/87adea64.js">
+<link rel="modulepreload" href="./_npm/d3-dispatch@3.0.1/9ba9c7f3.js">
+<link rel="modulepreload" href="./_npm/d3-drag@3.0.0/4202580c.js">
+<link rel="modulepreload" href="./_npm/d3-ease@3.0.1/cdd7e898.js">
+<link rel="modulepreload" href="./_npm/d3-fetch@3.0.1/b4e2ad9a.js">
+<link rel="modulepreload" href="./_npm/d3-force@3.0.0/5e804d15.js">
+<link rel="modulepreload" href="./_npm/d3-format@3.1.2/3785bf2d.js">
+<link rel="modulepreload" href="./_npm/d3-geo@3.1.1/40599fb3.js">
+<link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/e49e792c.js">
+<link rel="modulepreload" href="./_npm/d3-interpolate@3.0.1/8d1e5425.js">
+<link rel="modulepreload" href="./_npm/d3-path@3.1.0/20d3f133.js">
+<link rel="modulepreload" href="./_npm/d3-polygon@3.0.1/7553081f.js">
+<link rel="modulepreload" href="./_npm/d3-quadtree@3.0.1/0dfd751c.js">
+<link rel="modulepreload" href="./_npm/d3-random@3.0.1/3c90ee06.js">
+<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/720b7f0a.js">
+<link rel="modulepreload" href="./_npm/d3-scale-chromatic@3.1.0/ba24c2e7.js">
+<link rel="modulepreload" href="./_npm/d3-selection@3.0.0/4d94e5b7.js">
+<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/6d3a6726.js">
+<link rel="modulepreload" href="./_npm/d3-time@3.1.0/9f03c579.js">
+<link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/07c9626f.js">
+<link rel="modulepreload" href="./_npm/d3-timer@3.0.1/b58a267d.js">
+<link rel="modulepreload" href="./_npm/d3-transition@3.0.1/004da2ac.js">
+<link rel="modulepreload" href="./_npm/d3-zoom@3.0.0/b5786b3f.js">
+<link rel="modulepreload" href="./_npm/isoformat@0.2.1/18cbf477.js">
+<link rel="modulepreload" href="./_npm/interval-tree-1d@1.0.4/53fe8176.js">
+<link rel="modulepreload" href="./_npm/internmap@2.0.3/e08981d9.js">
+<link rel="modulepreload" href="./_npm/delaunator@5.1.0/d4ec0aa1.js">
+<link rel="modulepreload" href="./_npm/binary-search-bounds@2.0.5/cbf6ba23.js">
+<link rel="modulepreload" href="./_npm/robust-predicates@3.0.3/42820bfa.js">
+
+    <link rel="icon" href="./_file/observable.1af93621.png" type="image/png" sizes="32x32">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet">
+    <style>
+      :root { --sans-serif: "Roboto", sans-serif; }
+      main {
+        max-width: 950px !important;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      /* Override the air theme's built-in prose column width */
+      main p,
+      main h1, main h2, main h3, main h4, main h5, main h6,
+      main ul, main ol, main li, main blockquote,
+      main .observablehq, main .observablehq--block {
+        max-width: none !important;
+      }
+    </style>
+  
+<script type="module">
+
+import {define} from "./_observablehq/client.e29ec344.js";
+import {registerFile} from "./_observablehq/stdlib.277aeab8.js";
+
+registerFile("./data/ar-school-districts.geojson", {"name":"./data/ar-school-districts.geojson","mimeType":"application/geo+json","path":"./_file/data/ar-school-districts.749c1daa.geojson","lastModified":1775403495281,"size":1358393});
+registerFile("./data/district-retention-2026.json", {"name":"./data/district-retention-2026.json","mimeType":"application/json","path":"./_file/data/district-retention-2026.f8d8ab80.json","lastModified":1775438090503,"size":61726});
+registerFile("./data/district-retention.csv", {"name":"./data/district-retention.csv","mimeType":"text/csv","path":"./_file/data/district-retention.f6bced2d.csv","lastModified":1775438205946,"size":31644});
+registerFile("./data/labor-market-outcomes.csv", {"name":"./data/labor-market-outcomes.csv","mimeType":"text/csv","path":"./_file/data/labor-market-outcomes.be2d1e98.csv","lastModified":1774646564707,"size":3455});
+
+define({id: "f4064670", inputs: ["FileAttachment"], outputs: ["labor_market_outcomes","district_retention","district_retention_2026","ar_districts"], body: (FileAttachment) => {
+const labor_market_outcomes = FileAttachment(
+  "./data/labor-market-outcomes.csv",
+).csv();
+
+const district_retention = FileAttachment("./data/district-retention.csv").csv();
+
+const district_retention_2026 = FileAttachment(
+  "./data/district-retention-2026.json",
+).json();
+
+const ar_districts = FileAttachment("./data/ar-school-districts.geojson").json();
+return {labor_market_outcomes,district_retention,district_retention_2026,ar_districts};
+}});
+
+define({id: "31db21e2", inputs: ["display","labor_market_outcomes","width"], outputs: ["retentionRateChart"], body: async (display,labor_market_outcomes,width) => {
+const {retentionRateChart} = await import("./_import/components/retention-rate-chart.c6288782.js");
+display(retentionRateChart(labor_market_outcomes, { width }));
+return {retentionRateChart};
+}});
+
+define({id: "99a6c11c", inputs: ["display","labor_market_outcomes","width"], outputs: ["retentionBarChart"], body: async (display,labor_market_outcomes,width) => {
+const {retentionBarChart} = await import("./_import/components/retention-bar-chart.c2b9def0.js");
+display(retentionBarChart(labor_market_outcomes, { width }));
+return {retentionBarChart};
+}});
+
+define({id: "d7819af5", inputs: ["labor_market_outcomes","display","width"], outputs: ["changeFromBaselineChart","d3","PRE_PANDEMIC_YEARS","computeBaselineDeltas","departureCategories","departureDelta"], body: async (labor_market_outcomes,display,width) => {
+const [{changeFromBaselineChart}, d3] = await Promise.all([import("./_import/components/change-from-baseline-chart.80c2a07b.js"), import("./_npm/d3@7.9.0/66d82917.js")]);
+
+// Pre-pandemic school years used as the baseline for change calculations
+const PRE_PANDEMIC_YEARS = new Set([
+  "2014-15",
+  "2015-16",
+  "2016-17",
+  "2017-18",
+  "2018-19",
+  "2019-20",
+]);
+
+// Transforms raw labor-market-outcomes data into { x, category, change } rows
+// for a change-from-baseline chart. Pre-pandemic years are averaged into a
+// single "Pre-pandemic avg." baseline point (change = 0 by definition).
+// Post-pandemic years show the pp delta from that baseline.
+function computeBaselineDeltas(data, categoryLabels) {
+  const filtered = data.filter((d) => categoryLabels.includes(d.category));
+
+  // Per-category baseline: mean of pre-pandemic values
+  const baselines = {};
+  for (const label of categoryLabels) {
+    const preRows = filtered.filter(
+      (d) => d.category === label && PRE_PANDEMIC_YEARS.has(d.schoolyear),
+    );
+    baselines[label] = d3.mean(preRows, (d) => +d.value);
+  }
+
+  // Map rows to { x, category, change }, collapsing pre-pandemic years to one point
+  const transformed = [];
+  const seenBaseline = new Set();
+  for (const row of [...filtered].sort((a, b) =>
+    a.schoolyear.localeCompare(b.schoolyear),
+  )) {
+    if (PRE_PANDEMIC_YEARS.has(row.schoolyear)) {
+      if (!seenBaseline.has(row.category)) {
+        seenBaseline.add(row.category);
+        transformed.push({
+          x: "Pre-pandemic",
+          category: row.category,
+          change: 0,
+        });
+      }
+    } else {
+      transformed.push({
+        x: row.schoolyear,
+        category: row.category,
+        change: +row.value - baselines[row.category],
+      });
+    }
+  }
+  return transformed;
+}
+
+const departureCategories = [
+  { label: "Exiter", color: "#B2182B" },
+  { label: "Retired", color: "#67001F" },
+  { label: "Switcher", color: "#F4A582" },
+];
+const departureDelta = computeBaselineDeltas(
+  labor_market_outcomes,
+  departureCategories.map((c) => c.label),
+);
+display(changeFromBaselineChart(departureDelta, departureCategories, { width }));
+return {changeFromBaselineChart,d3,PRE_PANDEMIC_YEARS,computeBaselineDeltas,departureCategories,departureDelta};
+}});
+
+define({id: "bcdac012", inputs: ["computeBaselineDeltas","labor_market_outcomes","display","changeFromBaselineChart","width"], outputs: ["retainedCategories","retainedDelta"], body: (computeBaselineDeltas,labor_market_outcomes,display,changeFromBaselineChart,width) => {
+const retainedCategories = [
+  { label: "Stayer", color: "#053061" },
+  { label: "Mover - Same District", color: "#2166AC" },
+  { label: "Mover - New District", color: "#92C5DE" },
+];
+const retainedDelta = computeBaselineDeltas(
+  labor_market_outcomes,
+  retainedCategories.map((c) => c.label),
+);
+display(changeFromBaselineChart(retainedDelta, retainedCategories, { width }));
+return {retainedCategories,retainedDelta};
+}});
+
+define({id: "1626d23d", inputs: ["display","district_retention","width"], outputs: ["districtScatterChart"], body: async (display,district_retention,width) => {
+const {districtScatterChart} = await import("./_import/components/district-scatter-chart.12f39ae1.js");
+display(districtScatterChart(district_retention, { width }));
+return {districtScatterChart};
+}});
+
+define({id: "8aef0196", inputs: ["width","district_retention_2026","ar_districts","display"], outputs: ["districtMap","districtCard","html","isWide","mapWidth","gridCols","wrapper","updateCard"], body: async (width,district_retention_2026,ar_districts,display) => {
+const [{districtMap}, {districtCard}, {html}] = await Promise.all([import("./_import/components/district-map.1ae56aab.js"), import("./_import/components/district-card.12f70cea.js"), import("./_npm/htl@0.3.1/72f4716c.js")]);
+
+const isWide = width >= 750;
+const mapWidth = isWide ? Math.round(width * 0.52) : width;
+const gridCols = isWide ? `${mapWidth}px 1fr` : "1fr";
+
+const wrapper = html`<div
+  style="
+  display: grid;
+  grid-template-columns: ${gridCols};
+  grid-template-rows: auto 1fr;
+  border: 3.5px solid #111;
+  border-radius: 8px;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
+  font-family: Roboto, sans-serif;
+"
+>
+  <div
+    style="
+    grid-column: 1 / -1;
+    padding: 14px 18px 10px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #111;
+  "
+  >
+    2025–26 Teacher Retention Rates by District
+  </div>
+  <div class="map-slot"></div>
+  <div class="card-slot" style="box-sizing: border-box;"></div>
+</div>`;
+
+function updateCard(geoid) {
+  const slot = wrapper.querySelector(".card-slot");
+  slot.innerHTML = "";
+  const d = geoid
+    ? district_retention_2026.find((r) => r.geoid === geoid)
+    : null;
+  slot.appendChild(districtCard(d));
+}
+
+updateCard(null);
+
+wrapper.querySelector(".map-slot").appendChild(
+  districtMap(ar_districts, district_retention_2026, {
+    onSelect: updateCard,
+    width: mapWidth,
+  }),
+);
+
+display(wrapper);
+return {districtMap,districtCard,html,isWide,mapWidth,gridCols,wrapper,updateCard};
+}});
+
+</script>
+</head>
+<body>
+<div id="observablehq-center">
+<main id="observablehq-main" class="observablehq">
+<div class="observablehq observablehq--block"><!--:f4064670:--></div>
+<h1 id="arkansas-teacher-retention-2025-26-a-new-normal" tabindex="-1"><a class="observablehq-header-anchor" href="#arkansas-teacher-retention-2025-26-a-new-normal">Arkansas Teacher Retention 2025-26: A New Normal</a></h1>
+<p>In <a href="https://oep.uark.edu/2024-25-arkansas-teacher-retention-statewide-stability-amid-ongoing-local-challenges/" target="_blank" rel="noopener noreferrer">last year's post</a>, we saw early signs that Arkansas teacher retention recovery may have plateaued below pre-pandemic levels. New data for the 2025-26 school year confirms this. Roughly 12.7 percent of Arkansas teachers left the classroom for the second straight year - hovering above the 11 percent rate typical before the pandemic.</p>
+<p>What's behind this plateau? Many parts of the teacher labor market are returning to normal. Below, we explore those that are - and one that is not.</p>
+<h2 id="retention-rates-remain-low-in-2025-26" tabindex="-1"><a class="observablehq-header-anchor" href="#retention-rates-remain-low-in-2025-26">Retention Rates Remain Low in 2025-26</a></h2>
+<p>After initially rebounding from a 2022-23 low, Arkansas's teacher retention rate has leveled off about 1.5 pp below pre-pandemic levels. In 2025-26, roughly 87.3 percent of teachers returned to the classroom. This rate is unchanged from 2024-25, raising the question of whether increased teacher turnover is the new normal for the state.</p>
+<div class="observablehq observablehq--block"><!--:31db21e2:--></div>
+<p>To understand what's behind these rates, we sort teachers by their employment decisions between the 2024-25 and 2025-26 school years:</p>
+<ul>
+<li><span style="color: blue; font-weight: bold;">Stayers</span> remained teaching in the same school(s);</li>
+<li><span style="color: blue; font-weight: bold;">Mover</span> transferred to a different school or district;</li>
+<li><span style="color: blue; font-weight: bold;">Switchers</span> moved to a non-teaching role within Arkansas public schools;</li>
+<li><span style="color: blue; font-weight: bold;">Exiters</span> left the Arkansas public school system entirely.</li>
+</ul>
+<p>In 2025-26:</p>
+<ul>
+<li>77.1 percent of teachers were Stayers;</li>
+<li>10.2 percent of teachers were Movers who kept teaching but in a new school - 5.3 percent within the same district and 4.9 percent in a new district;</li>
+<li>3.5 percent of teachers were Switchers;</li>
+<li>9.1 percent of teachers were Exiters - 6.4 percent left the Arkansas public school workforce and 2.7 percent retired.</li>
+</ul>
+<div class="observablehq observablehq--block"><!--:99a6c11c:--></div>
+<p>The statewide retention rate of 87.3 percent includes all Movers and Stayers, since both continued to teach in Arkansas public schools in 2025-26. But stability in overall turnovers hides key patterns on the ground.</p>
+<h2 id="exits-not-retirements" tabindex="-1"><a class="observablehq-header-anchor" href="#exits-not-retirements">Exits, Not Retirements</a></h2>
+<p>Retirements are not driving decreased retention. In 2025-26, approximately 2.7 percent of teachers retired. This mirrors last year's rate exactly and sits slightly below pre-pandemic levels.</p>
+<div class="observablehq observablehq--block"><!--:d7819af5:--></div>
+<p>Instead, exits among early- and mid-career teachers are behind increased turnover. This year, about 6.4 percent of non-retiring teachers exited the workforce. This is over 1 pp higher than before the pandemic - the same high rate we've seen for the past three years.</p>
+<p>The remaining retention gap is driven by teachers switching to non-teaching roles within Arkansas public schools. In 2025-26, the Switcher rate declined by .2 pp, inching back towards pre-pandemic levels. This change continues a slow but steady pattern of decline - this rate is now down .8 percentage points since its 2022-23 peak.</p>
+<p>Last year, we discussed how the January 2025 expiration of Federal ESSER (Elementary and Secondary School Emergency Relief) funds could lead to declines in the Switcher rate, as many Arkansas districts funded additional non-teaching roles using these funds. That Switcher rates remain elevated this year suggests some rigidity in districts' response to this expiration.</p>
+<h2 id="teachers-are-staying-put" tabindex="-1"><a class="observablehq-header-anchor" href="#teachers-are-staying-put">Teachers Are Staying Put</a></h2>
+<p>In 2025-26, a larger proportion of teachers remained in the same school than at any time in the last five years. The Stayer rate rose to 77.1 percent this year, up .8 pp from 2024-25 and almost 3 pp from the low-water mark of 2022-23.</p>
+<div class="observablehq observablehq--block"><!--:bcdac012:--></div>
+<p>As more teachers stayed, fewer moved to new districts. Only 4.9 percent of teachers taught in a new district this year, a .8 pp decrease from 2024-25. This means that even as statewide retention held steady, the teachers who stayed were more likely to stay in their own district - a sign of growing stability within schools.</p>
+<h2 id="geographic-shortage-area-districts-continue-to-struggle" tabindex="-1"><a class="observablehq-header-anchor" href="#geographic-shortage-area-districts-continue-to-struggle">Geographic Shortage Area Districts Continue to Struggle</a></h2>
+<p>At the district level, retention recovery remains uneven. Despite increases in local retention for some of the state's lowest-retention districts, most shortage area districts continue to experience below average retention.</p>
+<p>The scatter plot below shows the district-level change in average retention from the low-point years of 2021-22 and 2022-23 versus the three years of recovery since. Districts highlighted in red were identified by the state as Tier I Geographic Shortage Areas in either <a href="https://static.ark.org/eeuploads/adhe-financial/21-22_Final_Geographical_Shortage_Area_List_10.5.21.pdf" target="_blank" rel="noopener noreferrer">2021-22</a> or <a href="https://sams.adhe.edu/File/22-23%20Geographical%20Teacher%20Shortage%20Area%20List%208.23.22.pdf" target="_blank" rel="noopener noreferrer">2022-23</a>.</p>
+<div class="observablehq observablehq--block"><!--:1626d23d:--></div>
+<p>Only four of the original shortage area districts reached above-average retention over the last three years. Among the shortage area districts with a prior retention rate below 75 percent, some gained significantly, other declined sharply, but none were able to catch up with the state average retention rate in the recent period.</p>
+<p>Below, you can review our updated interactive tool to examine how 2025-26 retention looks in your district.</p>
+<div class="observablehq observablehq--block"><!--:8aef0196:--></div>
+<h2 id="what-this-plateau-means" tabindex="-1"><a class="observablehq-header-anchor" href="#what-this-plateau-means">What This Plateau Means</a></h2>
+<p>We now have several years of post-pandemic data that reveal a new normal for Arkansas schools: lower retention rates, driven by higher exit rates among early- and mid-career teachers. But this surface-level stability hides how the teacher labor market continues to evolve. Teachers are staying more and moving less. District-level variation is wide. To understand the teacher labor market in Arkansas more fully, we need to examine who is entering and exiting the workforce, where they're coming from, and where they're heading.</p>
+</main>
+</div>
+</body>
+</html>
