@@ -41,9 +41,6 @@ export default {
   // The path to the source root.
   root: "src",
 
-  // base repo name on github
-  base: "/oep-blog-retention-overview-2026",
-
   theme: "air", // clean light theme — good for WordPress iframe embedding
   sidebar: false, // no navigation sidebar — single-page post, cleaner for iframe embedding
 
