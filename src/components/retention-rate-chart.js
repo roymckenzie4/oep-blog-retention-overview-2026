@@ -19,7 +19,7 @@ const RETAINED = new Set([
 const ERA_COLORS = { pre: "#AAAAAA", post: "#4A6FA5" };
 const REFERENCE_COLOR = "#B84A00";
 
-export function retentionRateChart(data) {
+export function retentionRateChart(data, { width = 640 } = {}) {
   // Sum the three retained categories by year → one retention rate per year
   const byYear = d3.rollup(
     data.filter((d) => RETAINED.has(d.category)),
@@ -45,16 +45,16 @@ export function retentionRateChart(data) {
   const postMid = postPoints[Math.floor(postPoints.length / 2)];
 
   const chart = Plot.plot({
-    width: 760,
-    height: 380,
+    width,
+    height: Math.round(width * 0.38),
     marginLeft: 60,
-    marginBottom: 60,
+    marginBottom: width < 600 ? 60 : 40,
     marginTop: 20,
     style: {
       fontFamily: "Roboto, sans-serif",
       fontSize: "15px",
     },
-    x: { label: null, tickRotate: -35, tickSize: 0, type: "point" },
+    x: { label: null, tickSize: 0, tickRotate: width < 600 ? -30 : 0, type: "point" },
     y: {
       label: "Statewide Retention Rate",
       labelAnchor: "center",

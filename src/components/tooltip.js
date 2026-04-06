@@ -77,7 +77,7 @@ export function attachTooltip(chart, points, { x, y = null, format, maxDist = 40
     display: none;
   "></div>`;
 
-  const container = html`<div style="position: relative; display: inline-block;">
+  const container = html`<div style="position: relative; display: block;">
     ${chart}${tip}
   </div>`;
 
@@ -110,11 +110,14 @@ export function attachTooltip(chart, points, { x, y = null, format, maxDist = 40
     tip.innerHTML = format(datum);
     tip.style.display = "block";
 
-    // Horizontal: default right of cursor, flip left if near right edge
-    const chartWidth = chart.offsetWidth;
-    const tipWidth = tip.offsetWidth;
+    // Horizontal: default right of cursor, flip left if near right edge.
+    // Use getBoundingClientRect (reliable for SVG) rather than offsetWidth.
+    const chartWidth = chart.getBoundingClientRect().width;
+    const tipWidth = tip.offsetWidth || 200;
     let left = tipX + 14;
-    if (left + tipWidth > chartWidth - 12) left = tipX - tipWidth - 14;
+    if (left + tipWidth > chartWidth - 8) left = tipX - tipWidth - 14;
+    // Clamp so the tooltip can never overflow either edge of the container.
+    left = Math.max(4, Math.min(left, chartWidth - tipWidth - 4));
     tip.style.left = `${left}px`;
 
     // Vertical: above cursor, flip below if it would clip the top

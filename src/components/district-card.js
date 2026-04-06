@@ -13,8 +13,8 @@ const COLORS = {
 
 const DOTS_PER_ROW = 20;
 const TOTAL_DOTS = 100; // always 5 complete rows of 20
-const DOT_SIZE = 11; // px, diameter
-const DOT_GAP = 2; // px, gap between dots
+const DOT_SIZE = 14; // px, diameter
+const DOT_GAP = 3; // px, gap between dots
 
 
 function pct(count, total) {

@@ -9,7 +9,7 @@ const NOT_SHORTAGE_COLOR = "#888";
 const DIAGONAL_COLOR = "#bbb";
 const STATE_AVG_COLOR = "#4A6FA5";
 
-export function districtScatterChart(data) {
+export function districtScatterChart(data, { width = 640 } = {}) {
   // Retention rates come in as proportions (0-1); convert to percentages for display
   const points = data
     .map((d) => ({
@@ -22,8 +22,8 @@ export function districtScatterChart(data) {
   const stateAvg = d3.mean(points, (d) => d.recent);
 
   const chart = Plot.plot({
-    width: 760,
-    height: 520,
+    width,
+    height: Math.round(width * 0.52),
     marginLeft: 55,
     marginBottom: 55,
     marginTop: 24,
@@ -143,7 +143,7 @@ export function districtScatterChart(data) {
   // --- Legend ---
   const legend = html`<div
     style="
-      width: 760px;
+      width: ${width}px;
       margin-top: 12px;
       font-family: 'Roboto', sans-serif;
       font-size: 13px;

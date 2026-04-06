@@ -23,6 +23,18 @@ export default {
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
       :root { --sans-serif: "Roboto", sans-serif; }
+      main {
+        max-width: 950px !important;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      /* Override the air theme's built-in prose column width */
+      main p,
+      main h1, main h2, main h3, main h4, main h5, main h6,
+      main ul, main ol, main li, main blockquote,
+      main .observablehq, main .observablehq--block {
+        max-width: none !important;
+      }
     </style>
   `,
 
@@ -30,6 +42,7 @@ export default {
   root: "src",
 
   theme: "air", // clean light theme — good for WordPress iframe embedding
+  sidebar: false, // no navigation sidebar — single-page post, cleaner for iframe embedding
 
   // Some additional configuration options and their defaults:
   // theme: "default", // try "light", "dark", "slate", etc.

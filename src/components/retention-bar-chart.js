@@ -15,14 +15,14 @@ const colorScale = {
   range: ["#053061", "#2166AC", "#92C5DE", "#F4A582", "#B2182B", "#67001F"],
 };
 
-export function retentionBarChart(data) {
+export function retentionBarChart(data, { width = 640 } = {}) {
   const chart = Plot.plot({
-    width: 800,
-    height: 600,
+    width,
+    height: Math.round(width * 0.55),
     marginLeft: 60,
-    marginBottom: 60,
+    marginBottom: width < 600 ? 60 : 40,
     style: { fontFamily: "Roboto, sans-serif", fontSize: "14px" },
-    x: { label: null, tickRotate: -35, type: "band", tickSize: 0 },
+    x: { label: null, type: "band", tickSize: 0, tickRotate: width < 600 ? -30 : 0 },
     y: {
       label: "% of Prior-Year Teachers",
       labelAnchor: "center",
@@ -87,30 +87,35 @@ export function retentionBarChart(data) {
   chart.addEventListener("mouseleave", () => highlight(null));
 
   const legendEl = html`<div
-    style="padding-top:52px; font-family:'Roboto',sans-serif; display:flex; flex-direction:column; gap:10px; min-width:160px; user-select:none;"
+    style="
+      padding: 10px 0 4px;
+      font-family: 'Roboto', sans-serif;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px 20px;
+      user-select: none;
+    "
   >
-    <div style="font-size:15px; font-weight:600; color:#333; margin-bottom:2px;">
-      Labor Force Outcome
-    </div>
     ${colorScale.domain.map(
       (label, i) =>
         html`<div
           data-category="${label}"
-          style="display:flex; align-items:center; gap:10px; cursor:default;"
+          style="display:flex; align-items:center; gap:7px; cursor:default;"
           onmouseover=${() => highlight(label)}
           onmouseout=${() => highlight(null)}
         >
           <div
-            style="width:18px; height:18px; background:${colorScale.range[
+            style="width:14px; height:14px; background:${colorScale.range[
               i
             ]}; flex-shrink:0; border-radius:2px;"
           ></div>
-          <span style="font-size:15px; color:#222;">${label}</span>
+          <span style="font-size:13px; color:#222;">${label}</span>
         </div>`,
     )}
   </div>`;
 
-  return html`<div style="display:flex; align-items:flex-start; gap:16px;">
+  return html`<div style="display:flex; flex-direction:column;">
     ${fadeStyle} ${chart} ${legendEl}
   </div>`;
 }

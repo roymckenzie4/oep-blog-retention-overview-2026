@@ -1,4 +1,5 @@
 import * as Plot from "npm:@observablehq/plot";
+import { html } from "npm:htl";
 import { attachTooltip } from "./tooltip.js";
 
 /**
@@ -9,38 +10,35 @@ import { attachTooltip } from "./tooltip.js";
  * This component is a pure renderer.
  *
  * @param {Array}  data        - Rows of { x, category, change }, where x is the
- *                               display label (e.g. "Pre-pandemic avg.", "2021-22")
+ *                               display label (e.g. "Pre-pandemic", "2021-22")
  *                               and change is the pp delta from baseline.
  * @param {Array}  categories  - [{ label, color }] in display order. Drives the
- *                               color scale, line order, and direct end-of-line labels.
+ *                               color scale, line order, and legend.
  * @param {Object} options
  *   @param {Array}  options.yDomain  - [min, max] for y-axis. Default: [-5, 5]
  *   @param {string} options.yLabel   - Y-axis label. Default: "Change from pre-pandemic avg. (pp)"
- *   @param {number} options.width    - Chart width in px. Default: 760
+ *   @param {number} options.width    - Chart width in px. Default: 640
  */
 export function changeFromBaselineChart(data, categories, options = {}) {
   const {
     yDomain = [-5, 5],
     yLabel = "Change from pre-pandemic avg. (pp)",
-    width = 760,
+    width = 640,
   } = options;
 
   // x domain: baseline point first, then post-period years in chronological order
   const postYears = [
-    ...new Set(data.filter((d) => d.x !== "Pre-pandemic avg.").map((d) => d.x)),
+    ...new Set(data.filter((d) => d.x !== "Pre-pandemic").map((d) => d.x)),
   ].sort();
-  const xDomain = ["Pre-pandemic avg.", ...postYears];
+  const xDomain = ["Pre-pandemic", ...postYears];
 
-  // Color lookup for direct labels and tooltip rows
+  // Color lookup for tooltip rows
   const colorMap = Object.fromEntries(categories.map((c) => [c.label, c.color]));
-
-  // Data points pinned to the last x value — used for direct end-of-line labels
-  const lastX = xDomain[xDomain.length - 1];
-  const labelPoints = data.filter((d) => d.x === lastX);
 
   // Category order for the tooltip: sorted by each category's change value in the
   // final year, descending — so tooltip rows match the visual top-to-bottom order
   // of the lines at the right edge of the chart.
+  const lastX = xDomain[xDomain.length - 1];
   const categoriesByLastYear = [...categories].sort((a, b) => {
     const aVal = data.find((d) => d.x === lastX && d.category === a.label)?.change ?? -Infinity;
     const bVal = data.find((d) => d.x === lastX && d.category === b.label)?.change ?? -Infinity;
@@ -62,10 +60,10 @@ export function changeFromBaselineChart(data, categories, options = {}) {
 
   const chart = Plot.plot({
     width,
-    height: 360,
+    height: Math.round(width * 0.40),
     marginLeft: 75,
-    marginRight: 140, // room for direct end-of-line labels
-    marginBottom: 100,
+    marginRight: 20,
+    marginBottom: width < 700 ? 70 : 50,
     marginTop: 20,
     style: {
       fontFamily: "Roboto, sans-serif",
@@ -73,8 +71,8 @@ export function changeFromBaselineChart(data, categories, options = {}) {
     },
     x: {
       label: null,
-      tickRotate: -35,
       tickSize: 0,
+      tickRotate: width < 700 ? -30 : 0,
       type: "point",
       domain: xDomain,
     },
@@ -102,7 +100,7 @@ export function changeFromBaselineChart(data, categories, options = {}) {
         stroke: "#555",
         strokeWidth: 2,
       }),
-      // Hover crosshair — snaps to x positions
+      // Hover crosshair — snaps to x positions, always visible when mouse is over chart
       Plot.ruleX(
         xPoints,
         Plot.pointerX({
@@ -110,6 +108,7 @@ export function changeFromBaselineChart(data, categories, options = {}) {
           stroke: "#999",
           strokeWidth: 0.5,
           strokeDasharray: "3,3",
+          maxRadius: Infinity,
         }),
       ),
       // Lines, one per category
@@ -127,20 +126,10 @@ export function changeFromBaselineChart(data, categories, options = {}) {
         fill: "category",
         r: 4,
       }),
-      // Direct end-of-line labels pinned to the last x point
-      Plot.text(labelPoints, {
-        x: "x",
-        y: "change",
-        text: "category",
-        fill: "category",
-        textAnchor: "start",
-        dx: 10,
-        fontSize: 13,
-      }),
     ],
   });
 
-  return attachTooltip(chart, xPoints, {
+  const container = attachTooltip(chart, xPoints, {
     x: "x",
     defaultTipY: 5,
     format: (d) => {
@@ -155,4 +144,27 @@ export function changeFromBaselineChart(data, categories, options = {}) {
       return `<strong>${d.x}</strong><br>${rows}`;
     },
   });
+
+  const legendEl = html`<div
+    style="
+      padding: 6px 0 2px;
+      font-family: 'Roboto', sans-serif;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px 20px;
+    "
+  >
+    ${categories.map(
+      (c) =>
+        html`<div style="display:flex; align-items:center; gap:8px;">
+          <div
+            style="width:24px; height:3px; background:${c.color}; border-radius:2px; flex-shrink:0;"
+          ></div>
+          <span style="font-size:13px; color:#444;">${c.label}</span>
+        </div>`,
+    )}
+  </div>`;
+
+  return html`<div>${container}${legendEl}</div>`;
 }

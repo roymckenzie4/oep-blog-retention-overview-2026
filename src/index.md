@@ -24,7 +24,7 @@ After initially rebounding from a 2022-23 low, Arkansas's teacher retention rate
 
 ```js
 import { retentionRateChart } from "./components/retention-rate-chart.js";
-display(retentionRateChart(labor_market_outcomes));
+display(retentionRateChart(labor_market_outcomes, { width }));
 ```
 
 To understand what's behind these rates, we sort teachers by their employment decisions between the 2024-25 and 2025-26 school years:
@@ -43,7 +43,7 @@ In 2025-26:
 
 ```js
 import { retentionBarChart } from "./components/retention-bar-chart.js";
-display(retentionBarChart(labor_market_outcomes));
+display(retentionBarChart(labor_market_outcomes, { width }));
 ```
 
 The statewide retention rate of 87.3 percent includes all Movers and Stayers, since both continued to teach in Arkansas public schools in 2025-26. But stability in overall turnovers hides key patterns on the ground.
@@ -92,7 +92,7 @@ function computeBaselineDeltas(data, categoryLabels) {
       if (!seenBaseline.has(row.category)) {
         seenBaseline.add(row.category);
         transformed.push({
-          x: "Pre-pandemic avg.",
+          x: "Pre-pandemic",
           category: row.category,
           change: 0,
         });
@@ -117,7 +117,7 @@ const departureDelta = computeBaselineDeltas(
   labor_market_outcomes,
   departureCategories.map((c) => c.label),
 );
-display(changeFromBaselineChart(departureDelta, departureCategories));
+display(changeFromBaselineChart(departureDelta, departureCategories, { width }));
 ```
 
 Instead, exits among early- and mid-career teachers are behind increased turnover. This year, about 6.4 percent of non-retiring teachers exited the workforce. This is over 1 pp higher than before the pandemic - the same high rate we've seen for the past three years.
@@ -140,7 +140,7 @@ const retainedDelta = computeBaselineDeltas(
   labor_market_outcomes,
   retainedCategories.map((c) => c.label),
 );
-display(changeFromBaselineChart(retainedDelta, retainedCategories));
+display(changeFromBaselineChart(retainedDelta, retainedCategories, { width }));
 ```
 
 As more teachers stayed, fewer moved to new districts. Only 4.9 percent of teachers taught in a new district this year, a .8 pp decrease from 2024-25. This means that even as statewide retention held steady, the teachers who stayed were more likely to stay in their own district - a sign of growing stability within schools.
@@ -153,7 +153,7 @@ The scatter plot below shows the district-level change in average retention from
 
 ```js
 import { districtScatterChart } from "./components/district-scatter-chart.js";
-display(districtScatterChart(district_retention));
+display(districtScatterChart(district_retention, { width }));
 ```
 
 Only four of the original shortage area districts reached above-average retention over the last three years. Among the shortage area districts with a prior retention rate below 75 percent, some gained significantly, other declined sharply, but none were able to catch up with the state average retention rate in the recent period.
@@ -165,15 +165,20 @@ import { districtMap } from "./components/district-map.js";
 import { districtCard } from "./components/district-card.js";
 import { html } from "npm:htl";
 
+const isWide = width >= 750;
+const mapWidth = isWide ? Math.round(width * 0.52) : width;
+const gridCols = isWide ? `${mapWidth}px 1fr` : "1fr";
+
 const wrapper = html`<div
   style="
   display: grid;
-  grid-template-columns: 480px 1fr;
+  grid-template-columns: ${gridCols};
   grid-template-rows: auto 1fr;
-  border: 1.5px solid #000;
+  border: 3.5px solid #111;
+  border-radius: 8px;
+  overflow: hidden;
   box-sizing: border-box;
   width: 100%;
-  max-width: 880px;
   font-family: Roboto, sans-serif;
 "
 >
@@ -181,7 +186,7 @@ const wrapper = html`<div
     style="
     grid-column: 1 / -1;
     padding: 14px 18px 10px;
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 700;
     color: #111;
   "
@@ -206,6 +211,7 @@ updateCard(null);
 wrapper.querySelector(".map-slot").appendChild(
   districtMap(ar_districts, district_retention_2026, {
     onSelect: updateCard,
+    width: mapWidth,
   }),
 );
 

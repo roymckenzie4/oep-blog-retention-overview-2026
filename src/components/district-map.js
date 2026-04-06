@@ -10,9 +10,7 @@ const DEFAULT_STROKE_WIDTH = "0.5";
 const HOVER_STROKE = "#000";
 const HOVER_STROKE_WIDTH = "2";
 
-const MAP_WIDTH = 480;
-const MAP_HEIGHT = 440;
-const MARGIN = 20; // padding inside the SVG on all sides
+const MARGIN = 30; // padding inside the SVG on all sides
 
 // Discrete retention-rate color scale with exact breakpoints (proportions, 0–1)
 const COLOR_THRESHOLDS = [0.65, 0.7, 0.75, 0.8, 0.85, 0.9];
@@ -31,7 +29,9 @@ const colorScale = d3
   .domain(COLOR_THRESHOLDS)
   .range(COLOR_RANGE);
 
-export function districtMap(geojson, data, { onSelect } = {}) {
+export function districtMap(geojson, data, { onSelect, width = 480 } = {}) {
+  const MAP_WIDTH = width;
+  const MAP_HEIGHT = Math.round(width * (440 / 480));
   const byGeoid = new Map(data.map((d) => [d.geoid, d]));
 
   // Two-pass rendering: fills first, strokes second.
