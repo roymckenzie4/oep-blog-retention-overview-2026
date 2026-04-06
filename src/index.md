@@ -126,7 +126,7 @@ Instead, exits among early- and mid-career teachers underlie increased turnover.
 
 Switchers drive the remaining retention gap. In 2025-26, the rate of teachers switching to non-teaching public school roles dropped by .2 pp, inching back towards pre-pandemic levels. This decrease continues a slow but steady pattern of decline - the Switcher rate is now down .8 percentage points from its 2022-23 peak.
 
-[Last year](https://oep.uark.edu/2024-25-arkansas-teacher-retention-statewide-stability-amid-ongoing-local-challenges/), we discussed how the January 2025 expiration of Federal ESSER (Elementary and Secondary School Emergency Relief) funds could lead to a dip in the Switcher rate, as many Arkansas districts used these funds for new non-teaching roles. That the Switcher rate remains elevated this year suggests some rigidity in districts' response to this expiration. Next year's data should reveals more of districts' adjustment to this funding loss.
+[Last year](https://oep.uark.edu/2024-25-arkansas-teacher-retention-statewide-stability-amid-ongoing-local-challenges/), we discussed how the January 2025 expiration of Federal ESSER (Elementary and Secondary School Emergency Relief) funds could lead to a dip in the Switcher rate, as many Arkansas districts used these funds for new non-teaching roles. That the Switcher rate remains elevated this year suggests some rigidity in districts' response to this expiration. Next year's data should reveal more of districts' adjustment to this funding loss.
 
 ## Teachers Are Staying Put
 
