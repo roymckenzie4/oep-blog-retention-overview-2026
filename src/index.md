@@ -50,7 +50,7 @@ display(retentionBarChart(labor_market_outcomes, { width }));
 
 ## Exits, Not Retirements
 
-Retirements are not driving decreased retention. In 2025-26, approximately 2.7 percent of teachers retired. This mirrors last year's rate exactly and sits slightly below pre-pandemic levels.
+Teachers are exiting the Arkansas public school workforce at a higher rate than before the pandemic, but they're no more likely to retire. In 2025-26, only 2.7 percent of teachers retired. This mirrors last year's rate exactly and sits slightly below pre-pandemic levels.
 
 ```js
 import { changeFromBaselineChart } from "./components/change-from-baseline-chart.js";
