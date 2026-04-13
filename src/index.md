@@ -14,7 +14,7 @@ const ar_districts = FileAttachment("data/ar-school-districts.geojson").json();
 
 # Arkansas Teacher Retention 2025-26: A New Normal
 
-In [last year's post](https://oep.uark.edu/2024-25-arkansas-teacher-retention-statewide-stability-amid-ongoing-local-challenges/), we saw early signs that Arkansas teacher retention may have plateaued below pre-pandemic levels. New data for the 2025-26 school year confirms this finding. For the second straight year, roughly <b>12.7 percent</b> of Arkansas teachers left the classroom - still almost <b>2 percentage points</b> above the typical pre-pandemic rate.
+In [last year's post](https://oep.uark.edu/2024-25-arkansas-teacher-retention-statewide-stability-amid-ongoing-local-challenges/), we saw early signs that Arkansas teacher retention may have plateaued below pre-pandemic levels. New data for the 2025-26 school year confirms this finding. For the second straight year, roughly <b>12.7 percent</b> of Arkansas teachers left the classroom - still almost <b>2 percentage points</b> above the typical pre-pandemic rate. This leveling-off is despite [high reported levels of teacher job satisfaction](https://oep.uark.edu/new-survey-results-show-arkansas-teachers-report-high-satisfaction-with-room-to-strengthen-support/) and early evidence that [LEARNS salary raises improved teacher retention](https://oep.uark.edu/raising-the-floor-early-evidence-suggests-learns-salary-increases-improved-teacher-retention/).
 
 What's behind this plateau? In this blog post, we explore those components of the teacher labor market that are returning to normal - and one that is not.
 
@@ -126,7 +126,7 @@ Instead, exits among early- and mid-career teachers underlie increased turnover.
 
 Switchers drive the remaining retention gap. In 2025-26, the rate of teachers switching to non-teaching public school roles dropped by .2 pp, inching back towards pre-pandemic levels. This decrease continues a slow but steady pattern of decline - the Switcher rate is now down .8 percentage points from its 2022-23 peak.
 
-[Last year](https://oep.uark.edu/2024-25-arkansas-teacher-retention-statewide-stability-amid-ongoing-local-challenges/), we discussed how the January 2025 expiration of Federal ESSER (Elementary and Secondary School Emergency Relief) funds could lead to a dip in the Switcher rate, as many Arkansas districts used these funds for new non-teaching roles. That the Switcher rate remains elevated this year suggests some rigidity in districts' response to this expiration. Next year's data should reveal more of districts' adjustment to this funding loss.
+[Last year](https://oep.uark.edu/2024-25-arkansas-teacher-retention-statewide-stability-amid-ongoing-local-challenges/), we discussed how the January 2025 expiration of Federal ESSER (Elementary and Secondary School Emergency Relief) funds could lead to a dip in the Switcher rate, as some Arkansas districts may have used these funds for new non-teaching roles. That the Switcher rate remains elevated this year suggests some rigidity in districts' response to this expiration. Next year's data should reveal more of districts' adjustment to this funding loss.
 
 ## Teachers Are Staying Put
 
@@ -149,7 +149,7 @@ As more teachers stayed, fewer moved to new districts. Only 4.9 percent of teach
 
 ## Geographic Shortage Area Districts Continue to Struggle
 
-At the district level, retention recovery remains uneven. Despite improvements for some of the state's lowest-retention districts, most shortage area districts still experience higher-than-average turnover.
+At the district level, retention recovery remains uneven. Despite improvements for some of the state's lowest-retention districts, most geographic shortage area districts still experience higher-than-average turnover.
 
 The scatter plot below compares average district-level retention rates for the low-point years of 2021-22 and 2022-23 versus the three years of recovery since. Districts highlighted in red were identified by the state as Tier I Geographic Shortage Areas in either [2021-22](https://static.ark.org/eeuploads/adhe-financial/21-22_Final_Geographical_Shortage_Area_List_10.5.21.pdf) or [2022-23](https://sams.adhe.edu/File/22-23%20Geographical%20Teacher%20Shortage%20Area%20List%208.23.22.pdf).
 
@@ -158,7 +158,7 @@ import { districtScatterChart } from "./components/district-scatter-chart.js";
 display(districtScatterChart(district_retention, { width }));
 ```
 
-Only seven of the original shortage area districts measured above-average retention over the last three years. Among the shortage area districts with a prior retention rate below 75 percent, some gained significantly, other declined sharply, but none were able to catch up with the state average retention rate in the recent period.
+Only seven of the original geographic shortage area districts measured above-average retention over the last three years. Among the geographic shortage area districts with a prior retention rate below 75 percent, some gained significantly, other declined sharply, but none were able to catch up with the state average retention rate in the recent period.
 
 Below, you can review our updated interactive tool to examine how 2025-26 retention looks in your district.
 
