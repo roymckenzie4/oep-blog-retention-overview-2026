@@ -155,8 +155,9 @@ cxwalk <- readr::read_csv("raw_data/educationdata_arkansas_2023.csv") %>%
     county_code,
     county_name,
     congress_district_id,
-    agency_type
-    #enrollment
+    agency_type,
+    enrollment,
+    teachers_total_fte
   ) %>%
   mutate(
     district_lea = as.numeric(gsub("AR-", "", district_lea))
@@ -270,3 +271,105 @@ ggsave(
   height = 8,
   units = "in"
 )
+
+ggplot(
+  ar_district_w_data,
+  aes(
+    x = avg_retention_trough,
+    y = avg_retention_recent
+  )
+) +
+  geom_point()
+#scale_y_continuous(limits = c(-.5, .5))
+
+ar_district_w_data %>%
+  filter(abs(avg_retention_recent - avg_retention_trough) <= .2) %>%
+  mutate(
+    # qtile = case_when(
+    #   avg_retention_trough <= .7650 ~ 1,
+    #   avg_retention_trough <= .8147 ~ 2,
+    #   avg_retention_trough <= .8567 ~ 3,
+    #   TRUE ~ 4
+    # )
+    qtile = category
+  ) %>%
+  group_by(qtile) %>%
+  summarize(
+    n = n(),
+    avg_retention_trough = mean(avg_retention_trough),
+    avg_retention_recent = mean(avg_retention_recent),
+    change = avg_retention_recent - avg_retention_trough
+  ) %>%
+  pivot_longer(
+    cols = starts_with("avg"),
+    names_to = "period",
+    names_prefix = "avg_retention_"
+  ) %>%
+  ggplot(aes(x = period, y = value, group = qtile, color = qtile)) +
+  geom_point() +
+  scale_x_discrete(limits = rev) +
+  geom_line()
+
+
+tile_scatter <- district_scatter %>%
+  filter(
+    avg_retention_trough < .95 &
+      avg_retention_trough > .6 &
+      avg_retention_recent - avg_retention_trough > -.2
+  ) %>%
+  mutate(qtile = ntile(avg_retention_trough, n = 4))
+agg <- tile_scatter %>%
+  group_by(qtile) %>%
+  summarize(
+    min_pre = min(avg_retention_trough),
+    max_pre = max(avg_retention_trough),
+    avg_retention_change = mean(avg_retention_recent - avg_retention_trough)
+  )
+
+ggplot() +
+  geom_point(
+    data = tile_scatter,
+    aes(
+      x = avg_retention_trough,
+      y = avg_retention_recent - avg_retention_trough,
+      color = factor(qtile)
+    ),
+    alpha = .3
+  ) +
+  geom_segment(
+    data = agg,
+    aes(
+      x = min_pre,
+      y = avg_retention_change,
+      xend = max_pre,
+      yend = avg_retention_change,
+      color = factor(qtile)
+    ),
+    size = 1.5,
+    alpha = .8
+  ) +
+  geom_hline(yintercept = 0)
+
+
+ggplot(
+  district_retention_all %>%
+    group_by(districtlea) %>%
+    filter(min(retention_rate) > .5), # & min(teachers_before) > 40),
+  aes(
+    x = fiscal_year,
+    y = retention_rate,
+    #color = districtlea,
+  ),
+) +
+  geom_line(alpha = .2, aes(group = districtlea)) +
+  theme(legend.position = "none") +
+  geom_smooth(
+    method = "lm",
+    aes(
+      x = fiscal_year,
+      y = retention_rate,
+      #color = districtlea,
+      #group = districtlea
+    ),
+  ) +
+  scale_y_continuous(limits = c(.5, 1))

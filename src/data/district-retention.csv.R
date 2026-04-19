@@ -2,21 +2,20 @@
 # Observable Framework data loader
 #
 # Computes district-level teacher retention rates. One row per district with
-# trough-period (2022-23) vs. recent-period (2024-26) averages. Includes GEOID
-# and district attributes so the output serves both the scatter plot and the
-# eventual map tool (join on geoid to Census geometry in the browser).
+# pre-pandemic (2014-15 to 2019-20) vs. recent (2023-24 to 2025-26) averages.
+# Includes GEOID and district attributes for the scatter plot.
 #
 # Output columns:
-#   districtlea            - ADE LEA code (string, e.g. "0101000")
-#   geoid                  - NCES GEOID for joining with Census geometry
-#   district_name          - District name (from CCD crosswalk)
-#   county_name            - County name
-#   urban_centric_locale   - NCES locale code
-#   avg_retention_trough   - Mean retention rate 2022-23 (proportion 0-1)
-#   avg_retention_recent   - Mean retention rate 2024-26 (proportion 0-1)
-#   n_teachers_trough      - Mean teacher headcount 2022-23
-#   n_teachers_recent      - Mean teacher headcount 2024-26
-#   shortage_status        - "Shortage" or "Not Shortage"
+#   districtlea              - ADE LEA code (string, e.g. "0101000")
+#   geoid                    - NCES GEOID for joining with Census geometry
+#   district_name            - District name (from GeoJSON)
+#   county_name              - County name
+#   urban_centric_locale     - NCES locale code
+#   avg_retention_prepandemic - Mean retention rate 2014-15 to 2019-20 (proportion 0-1)
+#   avg_retention_recent      - Mean retention rate 2023-24 to 2025-26 (proportion 0-1)
+#   n_teachers_prepandemic   - Mean teacher headcount, pre-pandemic period
+#   n_teachers_recent        - Mean teacher headcount, recent period
+#   shortage_status          - "Shortage" or "Not Shortage" (2025-26 state designation)
 
 library(data.table)
 library(dplyr)
@@ -27,11 +26,17 @@ library(readr)
 library(sf)
 
 # --- Configuration ---
+# Pre-pandemic fiscal years (school years 2014-15 through 2019-20).
+# 2019-20 is included: teachers made their decisions before COVID.
+PRE_PANDEMIC_YEARS <- c(2015, 2016, 2017, 2018, 2019, 2020)
+RECENT_YEARS <- c(2024, 2025, 2026)
+# Minimum pre-pandemic years required per district (out of 6 possible)
+MIN_PREPANDEMIC_YEARS <- 4
+
 data_path <- Sys.getenv(
   "TEACHER_LM_DATA",
   unset = "/Users/roymckenzie/Library/CloudStorage/Box-Box/0 - Arkansas Projects/Projects/Teacher Pipeline/Teacher Retention/0_data/Classroom and Inclusion SPED Teachers/teacher_workforce_transitions_classroom and inclusion SPED_12-18-25.csv" # nolint
 )
-
 
 # --- Load and prep data ---
 teacher_lm <- fread(
@@ -79,26 +84,35 @@ calculate_retention_rates <- function(year, teacher_lm) {
     ) |>
     mutate(
       fiscal_year = year,
-      n_retained = teachers_before - exiters - retirements - movers_out - switchers, # nolint: line_length_linter.
+      n_retained = teachers_before - exiters - retirements - movers_out - switchers, # nolint
       retention_rate = n_retained / teachers_before
     ) |>
     rename(districtlea = districtlea_before)
 }
 
-years <- c(2022, 2023, 2024, 2025, 2026)
+all_years <- c(PRE_PANDEMIC_YEARS, RECENT_YEARS)
 
-district_retention_all <- map(years, ~ calculate_retention_rates(.x, teacher_lm)) |>
+district_retention_all <- map(
+  all_years,
+  ~ calculate_retention_rates(.x, teacher_lm)
+) |>
   list_rbind()
 
-# --- Aggregate into trough (2022-23) vs. recent (2024-26) periods ---
-# Drop districts missing data in any of the five years
+# --- Aggregate into pre-pandemic vs. recent periods ---
+# Require all 3 recent years and at least MIN_PREPANDEMIC_YEARS pre-pandemic years.
 district_scatter <- district_retention_all |>
-  group_by(districtlea) |>
-  filter(n() == 5) |>
-  ungroup() |>
   mutate(
-    period = if_else(fiscal_year %in% c(2022, 2023), "trough", "recent")
+    period = case_when(
+      fiscal_year %in% PRE_PANDEMIC_YEARS ~ "prepandemic",
+      fiscal_year %in% RECENT_YEARS       ~ "recent"
+    )
   ) |>
+  group_by(districtlea) |>
+  filter(
+    sum(fiscal_year %in% RECENT_YEARS) == length(RECENT_YEARS),
+    sum(fiscal_year %in% PRE_PANDEMIC_YEARS) >= MIN_PREPANDEMIC_YEARS
+  ) |>
+  ungroup() |>
   group_by(districtlea, period) |>
   summarise(
     avg_retention = mean(retention_rate),
@@ -111,31 +125,25 @@ district_scatter <- district_retention_all |>
   ) |>
   mutate(districtlea_num = as.numeric(districtlea))
 
-# --- Tag shortage districts ---
-# Districts identified as Tier I Geographic Shortage Areas in 2021-22 or 2022-23
-shortage_districts <- c(
-  5201000, 4702000, 4801000, 5204000, 4802000, 1305000,
-  201000, 5106000, 901000, 101000, 2104000, 1802000,
-  7001000, 2002000, 6201000, 203000, 5403000, 601000,
-  2903000, 7003000, 5440700, 3704000, 3904000, 1804000,
-  5604000, 5404000, 2105000, 2203000, 6002000, 4713000,
-  407000, 3505000, 4003000, 104000, 4605000, 5605000,
-  602000, 3509000, 4701000, 3201000, 3212000, 3502000,
-  3306000, 6004000, 506000
-)
+# --- Tag shortage districts (2025-26 state designation) ---
+shortage_2025 <- read_csv(
+  "src/data/shortage-districts-2025-26.csv",
+  col_types = cols(lea = col_character()),
+  show_col_types = FALSE
+) |>
+  filter(shortage == 1) |>
+  mutate(lea_num = as.numeric(lea))
 
 district_scatter <- district_scatter |>
   mutate(
     shortage_status = if_else(
-      districtlea_num %in% shortage_districts,
+      districtlea_num %in% shortage_2025$lea_num,
       "Shortage",
       "Not Shortage"
     )
   )
 
-# --- Load CCD crosswalk for county/locale metadata only ---
-# educationdata_arkansas_2023.csv is a static file in src/data/,
-# copied from drafts/raw_data/. leaid read as character to preserve leading zeros.
+# --- Load CCD crosswalk for county/locale metadata ---
 cxwalk <- read_csv(
   "src/data/educationdata_arkansas_2023.csv",
   col_types = cols(leaid = col_character()),
@@ -151,14 +159,12 @@ cxwalk <- read_csv(
     district_lea = as.numeric(gsub("AR-", "", district_lea))
   )
 
-# --- Load GeoJSON for correctly-cased district names and GEOID filter ---
-# Excludes charters, coops, and career centers that appear in the retention data
-# but don't have geographic boundaries in the Census shapefile.
+# --- Load GeoJSON for correctly-cased district names ---
 geojson_names <- sf::read_sf("src/data/ar-school-districts.geojson") |>
   sf::st_drop_geometry() |>
   select(geoid = GEOID, district_name = NAME)
 
-# --- Join crosswalk and write output ---
+# --- Join and write output ---
 output <- district_scatter |>
   left_join(cxwalk, by = c("districtlea_num" = "district_lea")) |>
   inner_join(geojson_names, by = "geoid") |>
@@ -168,10 +174,10 @@ output <- district_scatter |>
     district_name,
     county_name,
     urban_centric_locale,
-    avg_retention_trough,
+    avg_retention_prepandemic,
     avg_retention_recent,
-    n_teachers_trough = n_teachers_avg_trough,
-    n_teachers_recent = n_teachers_avg_recent,
+    n_teachers_prepandemic = n_teachers_avg_prepandemic,
+    n_teachers_recent      = n_teachers_avg_recent,
     shortage_status
   )
 

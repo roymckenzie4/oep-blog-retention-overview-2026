@@ -15,10 +15,10 @@ export function districtScatterChart(data, { width = 640 } = {}) {
   const points = data
     .map((d) => ({
       ...d,
-      trough: +d.avg_retention_trough * 100,
+      prepandemic: +d.avg_retention_prepandemic * 100,
       recent: +d.avg_retention_recent * 100,
     }))
-    .filter((d) => !isNaN(d.trough) && !isNaN(d.recent));
+    .filter((d) => !isNaN(d.prepandemic) && !isNaN(d.recent));
 
   const stateAvg = d3.mean(points, (d) => d.recent);
 
@@ -30,7 +30,7 @@ export function districtScatterChart(data, { width = 640 } = {}) {
     marginTop: 24,
     style: CHART_STYLE,
     x: {
-      label: "Avg. Retention Rate, 2021–22 and 2022–23",
+      label: "Avg. Retention Rate, Pre-pandemic (2014–15 to 2019–20)",
       labelAnchor: "center",
       labelArrow: "none",
       domain: [55, 100],
@@ -49,7 +49,7 @@ export function districtScatterChart(data, { width = 640 } = {}) {
       Plot.gridX({ stroke: GRID_COLOR, strokeWidth: 1 }),
       Plot.gridY({ stroke: GRID_COLOR, strokeWidth: 1 }),
 
-      // Diagonal parity line — districts above this line improved, below declined
+      // Diagonal parity line — districts above have improved vs. pre-pandemic, below have declined
       Plot.line(
         [
           { x: 55, y: 55 },
@@ -83,7 +83,7 @@ export function districtScatterChart(data, { width = 640 } = {}) {
 
       // District dots
       Plot.dot(points, {
-        x: "trough",
+        x: "prepandemic",
         y: "recent",
         fill: (d) =>
           d.shortage_status === "Shortage"
@@ -98,7 +98,7 @@ export function districtScatterChart(data, { width = 640 } = {}) {
       Plot.dot(
         points,
         Plot.pointer({
-          x: "trough",
+          x: "prepandemic",
           y: "recent",
           fill: (d) =>
             d.shortage_status === "Shortage"
@@ -121,15 +121,15 @@ export function districtScatterChart(data, { width = 640 } = {}) {
   );
 
   const container = attachTooltip(chart, points, {
-    x: "trough",
+    x: "prepandemic",
     y: "recent",
     format: (d) => {
-      const change = d.recent - d.trough;
+      const change = d.recent - d.prepandemic;
       const sign = change >= 0 ? "+" : "−";
       const color = change >= 0 ? "#2e7d32" : "#c0392b";
       return `
         <strong>${formatName(d.district_name)}</strong><br>
-        2021–22 and 2022–23: ${d.trough.toFixed(1)}%<br>
+        Pre-pandemic avg.: ${d.prepandemic.toFixed(1)}%<br>
         2023–24 to 2025–26: ${d.recent.toFixed(1)}%<br>
         <span style="color:${color}; font-weight:600">
           Change: ${sign}${Math.abs(change).toFixed(1)} pp
@@ -140,7 +140,7 @@ export function districtScatterChart(data, { width = 640 } = {}) {
 
   const legend = makeLegend([
     { label: "Not a Shortage District", color: NOT_SHORTAGE_COLOR },
-    { label: "Shortage District (2021–22 or 2022–23)", color: SHORTAGE_COLOR },
+    { label: "Shortage District (2025–26)", color: SHORTAGE_COLOR },
   ]);
 
   return html`<div>${container}${legend}</div>`;

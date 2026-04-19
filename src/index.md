@@ -194,7 +194,7 @@ As more teachers stayed, fewer moved to new districts. Only 4.9 percent of teach
 
 At the district level, retention recovery remains uneven. Despite improvements for some of the state's lowest-retention districts, most geographic shortage area districts still experience higher-than-average turnover.
 
-The scatter plot below compares average district-level retention rates for the low-point years of 2021-22 and 2022-23 versus the three years of recovery since. Districts highlighted in red were identified by the state as Tier I Geographic Shortage Areas in either [2021-22](https://static.ark.org/eeuploads/adhe-financial/21-22_Final_Geographical_Shortage_Area_List_10.5.21.pdf) or [2022-23](https://sams.adhe.edu/File/22-23%20Geographical%20Teacher%20Shortage%20Area%20List%208.23.22.pdf).
+The scatter plot below compares each district's average retention rate before the pandemic (2014-15 to 2019-20) against the three most recent years (2023-24 to 2025-26). Districts to the right of the diagonal held retention rates similar to their pre-pandemic levels; districts below it have not recovered. Districts highlighted in red were identified by the state as Geographic Shortage Areas in 2025-26.
 
 ```js
 import { districtScatterChart } from "./components/district-scatter-chart.js";
