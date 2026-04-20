@@ -32,7 +32,7 @@ display(retentionRateChart(labor_market_outcomes, { width }));
 To understand what's driving these patterns, we sort teachers by their employment decisions between the 2024-25 and 2025-26 school years:
 
 - <span style="color: #053061; font-weight: bold;">Stayers</span> remained teaching in the same school(s);
-- <span style="color: #2166AC; font-weight: bold;">Mover</span> transferred to a different school or district;
+- <span style="color: #2166AC; font-weight: bold;">Movers</span> transferred to a different school or district;
 - <span style="color: #F4A582; font-weight: bold;">Switchers</span> moved to a non-teaching role within Arkansas public schools;
 - <span style="color: #B2182B; font-weight: bold;">Exiters</span> left the Arkansas public school system entirely.
 
@@ -179,13 +179,13 @@ display(
 );
 ```
 
-While exits drive most of the decline in retention, they aren't the only factor. Switchers drive the remaining retention gap. In 2025-26, the rate of teachers switching to non-teaching public school roles dropped by .2 pp, inching back towards pre-pandemic levels. This decrease continues a slow but steady pattern of decline - the Switcher rate is now down .8 percentage points from its 2022-23 peak.
+While exits drive most of the decline in retention, they aren't the only factor. Switchers drive the remaining retention gap. In 2025-26, the rate of teachers switching to non-teaching public school roles dropped by 0.2 pp, inching back towards pre-pandemic levels. This decrease continues a slow but steady pattern of decline - the Switcher rate is now down 0.8 percentage points from its 2022-23 peak.
 
 [Last year](https://oep.uark.edu/2024-25-arkansas-teacher-retention-statewide-stability-amid-ongoing-local-challenges/), we discussed how the January 2025 expiration of Federal ESSER (Elementary and Secondary School Emergency Relief) funds could lead to a dip in the Switcher rate, as some Arkansas districts may have used these funds for new non-teaching roles. That the Switcher rate remains elevated this year suggests some rigidity in districts' response to this expiration. Next year's data should reveal more of districts' adjustment to this funding loss.
 
 ## Teachers Are Staying Put
 
-In 2025-26, a greater share of teachers remained in the same school than at any time in the last five years. The Stayer rate rose to 77.1 percent this year, up .8 percentage points from 2024-25 and almost 3 percentage points from the low-water mark of 2022-23.
+In 2025-26, a greater share of teachers remained in the same school than at any time in the last five years. The Stayer rate rose to 77.1 percent this year, up 0.8 percentage points from 2024-25 and almost 3 percentage points from the low-water mark of 2022-23.
 
 ```js
 const retainedCategories = [
@@ -200,7 +200,7 @@ const retainedDelta = computeBaselineDeltas(
 display(changeFromBaselineChart(retainedDelta, retainedCategories, { width }));
 ```
 
-As more teachers stayed, fewer moved to new districts. Only 4.9 percent of teachers taught in a new district this year, a .8 percentage point decrease from 2024-25. This means that even as statewide retention held steady, those teachers who were retained were more likely to stay in their own district - a sign of growing stability within schools.
+As more teachers stayed, fewer moved to new districts. Only 4.9 percent of teachers taught in a new district this year, a 0.8 percentage point decrease from 2024-25. This means that even as statewide retention held steady, those teachers who were retained were more likely to stay in their own district - a sign of growing stability within schools.
 
 ## Geographic Shortage Area Districts Continue to Struggle
 
@@ -210,10 +210,22 @@ The scatter plot below compares each district's average retention rate before th
 
 ```js
 import { districtScatterChart } from "./components/district-scatter-chart.js";
-display(districtScatterChart(district_retention, { width }));
+import { html } from "npm:htl";
+const csvUrl = await FileAttachment("data/district-retention.csv").url();
+display(
+  districtScatterChart(district_retention, {
+    width,
+    caption: html`<a
+      href="${csvUrl}"
+      download="district-retention.csv"
+      style="color: inherit;"
+      >Download chart data (CSV)</a
+    >`,
+  }),
+);
 ```
 
-Most 2025-26 geographic shortage districts measured below-average levels of retention over the last three years. On average, these districts retained only 77.1 percent of teachers - roughly 4.5 pp less than the average district in the state. Most of these districts experienced high levels of turnover before the pandemic as well, and while some have experienced large improvements in retention, 40 out of the 64 shortage area districts have lower retention now before the pandemic.
+Most 2025-26 geographic shortage districts measured below-average levels of retention over the last three years. On average, these districts retained only 77.1 percent of teachers - roughly 4.5 pp less than the average district in the state. Most of these districts experienced high levels of turnover before the pandemic as well, and while some have experienced large improvements in retention, 40 out of the 64 shortage area districts have lower retention now than before the pandemic.
 
 Below, you can review our updated interactive tool to examine how 2025-26 retention looks in your district.
 

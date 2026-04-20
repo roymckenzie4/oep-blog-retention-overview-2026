@@ -11,11 +11,10 @@
 #   district_name            - District name (from GeoJSON)
 #   county_name              - County name
 #   urban_centric_locale     - NCES locale code
-#   avg_retention_prepandemic - Mean retention rate 2014-15 to 2019-20 (proportion 0-1)
-#   avg_retention_recent      - Mean retention rate 2023-24 to 2025-26 (proportion 0-1)
-#   n_teachers_prepandemic   - Mean teacher headcount, pre-pandemic period
-#   n_teachers_recent        - Mean teacher headcount, recent period
-#   shortage_status          - "Shortage" or "Not Shortage" (2025-26 state designation)
+#   retention_prepandemic_pct - Mean retention rate 2014-15 to 2019-20 (percent, rounded to 1 decimal)
+#   retention_recent_pct      - Mean retention rate 2023-24 to 2025-26 (percent, rounded to 1 decimal)
+#   retention_change_pp       - Change from pre-pandemic to recent (percentage points, rounded to 1 decimal)
+#   shortage_status           - "Shortage" or "Not Shortage" (2025-26 state designation)
 
 library(data.table)
 library(dplyr)
@@ -168,17 +167,19 @@ geojson_names <- sf::read_sf("src/data/ar-school-districts.geojson") |>
 output <- district_scatter |>
   left_join(cxwalk, by = c("districtlea_num" = "district_lea")) |>
   inner_join(geojson_names, by = "geoid") |>
+  mutate(
+    retention_prepandemic_pct = round(avg_retention_prepandemic * 100, 1),
+    retention_recent_pct      = round(avg_retention_recent * 100, 1),
+    retention_change_pp       = round((avg_retention_recent - avg_retention_prepandemic) * 100, 1)
+  ) |>
   select(
     districtlea,
-    geoid,
     district_name,
     county_name,
-    urban_centric_locale,
-    avg_retention_prepandemic,
-    avg_retention_recent,
-    n_teachers_prepandemic = n_teachers_avg_prepandemic,
-    n_teachers_recent      = n_teachers_avg_recent,
-    shortage_status
+    shortage_status,
+    retention_prepandemic_pct,
+    retention_recent_pct,
+    retention_change_pp
   )
 
 write.csv(output, stdout(), row.names = FALSE)

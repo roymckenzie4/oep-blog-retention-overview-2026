@@ -10,13 +10,13 @@ const NOT_SHORTAGE_COLOR = "#888";
 const DIAGONAL_COLOR = "#bbb";
 const STATE_AVG_COLOR = "#4A6FA5";
 
-export function districtScatterChart(data, { width = 640 } = {}) {
+export function districtScatterChart(data, { width = 640, caption } = {}) {
   // Retention rates come in as proportions (0-1); convert to percentages for display
   const points = data
     .map((d) => ({
       ...d,
-      prepandemic: +d.avg_retention_prepandemic * 100,
-      recent: +d.avg_retention_recent * 100,
+      prepandemic: +d.retention_prepandemic_pct,
+      recent: +d.retention_recent_pct,
     }))
     .filter((d) => !isNaN(d.prepandemic) && !isNaN(d.recent));
 
@@ -143,5 +143,9 @@ export function districtScatterChart(data, { width = 640 } = {}) {
     { label: "Shortage District (2025–26)", color: SHORTAGE_COLOR },
   ]);
 
-  return html`<div>${container}<div style="padding-left: 55px; padding-right: 20px;">${legend}</div></div>`;
+  const captionEl = caption
+    ? html`<p style="margin: 6px 0 0; font-size: 12px; color: #888; font-style: italic;">${caption}</p>`
+    : null;
+
+  return html`<div>${container}<div style="padding-left: 55px; padding-right: 20px;">${legend}</div>${captionEl}</div>`;
 }
