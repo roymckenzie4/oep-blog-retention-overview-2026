@@ -217,7 +217,7 @@ display(
     width,
     caption: html`<a
       href="${csvUrl}"
-      download="district-retention.csv"
+      download="OEP-Arkansas-District-Retention-Trends.csv"
       style="color: inherit;"
       >Download chart data (CSV)</a
     >`,
@@ -285,6 +285,22 @@ wrapper.querySelector(".map-slot").appendChild(
 );
 
 display(wrapper);
+
+const csvData = district_retention_2026.map((d) => ({
+  districtlea: d.districtlea,
+  district_name: d.district_name,
+  county_name: d.county_name,
+  teachers_before: d.teachers_before,
+  retention_rate_pct: (+d.retention_rate * 100).toFixed(1),
+  stayers: d.stayers,
+  movers_new_district: d.movers_new_district,
+  switchers: d.switchers,
+  exiters: d.exiters,
+  retirees: d.retirees,
+}));
+const blob = new Blob([d3.csvFormat(csvData)], { type: "text/csv" });
+const downloadUrl = URL.createObjectURL(blob);
+display(html`<p style="margin: 6px 0 0; font-size: 12px; color: #888; font-style: italic;"><a href="${downloadUrl}" download="OEP-Arkansas-District-Retention-2025-26.csv" style="color: inherit;">Download district data (CSV)</a></p>`);
 ```
 
 ## What This Plateau Means
