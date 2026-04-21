@@ -58,6 +58,8 @@ export default {
       if (window.self !== window.top) {
         const title = document.querySelector("h1");
         if (title) title.style.display = "none";
+        const center = document.getElementById("observablehq-center");
+        if (center) center.style.margin = "0";
       }
       reportHeight();
       new ResizeObserver(reportHeight).observe(document.body);
