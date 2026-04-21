@@ -62,6 +62,10 @@ export default {
         if (center) center.style.margin = "0";
         const main = document.querySelector("main");
         if (main) { main.style.maxWidth = "none"; main.style.margin = "0"; }
+        document.body.style.fontSize = "18px";
+        document.body.style.color = "#565656";
+        const firstP = document.querySelector("main p");
+        if (firstP) firstP.style.marginTop = "0";
       }
       reportHeight();
       new ResizeObserver(reportHeight).observe(document.body);
