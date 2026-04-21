@@ -38,6 +38,11 @@ export default {
       main .observablehq, main .observablehq--block {
         max-width: none !important;
       }
+      /* Heading anchor links: disable hover/click behavior */
+      main h2 a, main h3 a, main h4 a {
+        pointer-events: none;
+        text-decoration: none;
+      }
       /* When embedded in WordPress iframe: remove all padding/margins */
       html.iframe-embed #observablehq-center {
         margin: 0 !important;
