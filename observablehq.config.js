@@ -60,6 +60,8 @@ export default {
         if (title) title.style.display = "none";
         const center = document.getElementById("observablehq-center");
         if (center) center.style.margin = "0";
+        const main = document.querySelector("main");
+        if (main) { main.style.maxWidth = "none"; main.style.margin = "0"; }
       }
       reportHeight();
       new ResizeObserver(reportHeight).observe(document.body);
