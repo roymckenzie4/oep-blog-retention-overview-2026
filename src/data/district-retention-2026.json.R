@@ -28,7 +28,7 @@ library(jsonlite)
 # --- Configuration ---
 data_path <- Sys.getenv(
   "TEACHER_LM_DATA",
-  unset = "/Users/roymckenzie/Library/CloudStorage/Box-Box/0 - Arkansas Projects/Projects/Teacher Pipeline/Teacher Retention/0_data/Classroom and Inclusion SPED Teachers/teacher_workforce_transitions_classroom and inclusion SPED_12-18-25.csv" # nolint
+  unset = "/Users/roymckenzie/Library/CloudStorage/Box-Box/0 - Arkansas Projects/Projects/Teacher Pipeline/Teacher Retention/0_data/Classroom and Inclusion SPED Teachers/teacher_workforce_transitions_Classroom and Inclusion SPED Teachers_04-20-26.csv" # nolint
 )
 
 # --- Load and prep data ---
@@ -59,8 +59,8 @@ district_2026 <- teachers_year |>
   filter(lf_outcome != "New") |>
   group_by(districtlea_before) |>
   summarise(
-    teachers_before     = n(),
-    stayers             = sum(
+    teachers_before = n(),
+    stayers = sum(
       lf_outcome == "Stayer" |
         (lf_outcome == "Mover" & lf_mover_same_district == 1),
       na.rm = TRUE
@@ -69,12 +69,12 @@ district_2026 <- teachers_year |>
       lf_outcome == "Mover" & lf_mover_new_district == 1,
       na.rm = TRUE
     ),
-    switchers           = sum(lf_outcome == "Switcher", na.rm = TRUE),
-    exiters             = sum(
+    switchers = sum(lf_outcome == "Switcher", na.rm = TRUE),
+    exiters = sum(
       lf_outcome == "Exiter" & lf_exiter_not_retired == 1,
       na.rm = TRUE
     ),
-    retirees            = sum(
+    retirees = sum(
       lf_outcome == "Exiter" & lf_exiter_retired == 1,
       na.rm = TRUE
     ),
