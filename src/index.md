@@ -16,34 +16,38 @@ const ar_districts = FileAttachment("data/ar-school-districts.geojson").json();
 
 # Arkansas Teacher Retention 2025-26: A New Normal
 
-In [last year's post](https://oep.uark.edu/2024-25-arkansas-teacher-retention-statewide-stability-amid-ongoing-local-challenges/), we saw early signs that Arkansas teacher retention may have plateaued below pre-pandemic levels. This pattern is consistent with national trends — a [RAND survey](https://www.rand.org/pubs/research_reports/RRA4737-1.html) found that districts' reported rates of teacher retirements and resignations nearly doubled during the pandemic before only partially recovering. New data for the 2025-26 school year confirms this finding in Arkansas. For the second straight year, roughly <b>12.7 percent</b> of Arkansas teachers left the classroom - still almost <b>2 percentage points</b> above the typical pre-pandemic rate. This leveling-off is despite [high reported levels of teacher job satisfaction](https://oep.uark.edu/new-survey-results-show-arkansas-teachers-report-high-satisfaction-with-room-to-strengthen-support/) and early evidence that [LEARNS salary raises improved teacher retention](https://oep.uark.edu/raising-the-floor-early-evidence-suggests-learns-salary-increases-improved-teacher-retention/).
+[Last year](https://oep.uark.edu/2024-25-arkansas-teacher-retention-statewide-stability-amid-ongoing-local-challenges/), we saw early signs that Arkansas teacher retention may have plateaued below pre-pandemic levels. This pattern is consistent with national trends — a [RAND survey](https://www.rand.org/pubs/research_reports/RRA4737-1.html) found that district leaders' reported rates of teacher retirements and resignations nearly doubled during the pandemic before only partially recovering. New data for the 2025-26 school year confirms this finding in Arkansas. For the second straight year, roughly <b>12.7 percent</b> of Arkansas teachers left the classroom - still almost <b>2 percentage points</b> above the typical pre-pandemic rate. This leveling-off is despite [teachers reporting high job satisfaction](https://oep.uark.edu/new-survey-results-show-arkansas-teachers-report-high-satisfaction-with-room-to-strengthen-support/) and early evidence that [LEARNS salary increases improved teacher retention](https://oep.uark.edu/raising-the-floor-early-evidence-suggests-learns-salary-increases-improved-teacher-retention/).
 
 What's behind this plateau? In this blog post, we explore those components of the teacher labor market that are returning to normal - and one that is not.
 
-## Retention Rates Are Still Below Pre-Pandemic Levels
+## Retention rates are still below pre-pandemic levels.
 
-In 2025-26, roughly 87 percent of Arkansas teachers returned to the classroom. This rate is unchanged from 2024-25 and remains over 1.5 percentage points below pre-pandemic levels. This raises a natural question: is higher teacher turnover the new normal for the state?
+In 2025-26, roughly 87 percent of Arkansas teachers returned to the classroom. This rate is unchanged from 2024-25 and remains over 1.5 percentage points below pre-pandemic levels. This raises a natural question: is slightly higher teacher turnover the new normal for the state?
 
 ```js
 import { retentionRateChart } from "./components/retention-rate-chart.js";
 display(retentionRateChart(labor_market_outcomes, { width }));
 ```
 
-To understand what's driving these patterns, we sort teachers by their employment decisions between the 2024-25 and 2025-26 school years:
+To understand what's driving these patterns, we categorize teachers by their employment decisions between the 2024-25 and 2025-26 school years:
 
 - <span style="color: #053061; font-weight: bold;">Stayers</span> remained teaching in the same school(s);
-- <span style="color: #2166AC; font-weight: bold;">Movers</span> transferred to a different school or district;
+- <span style="color: #2166AC; font-weight: bold;">Movers - Same District</span> transferred to a different school within the same district;
+- <span style="color: #92C5DE; font-weight: bold;">Movers - New District</span> transferred to a school in a new district;
 - <span style="color: #F4A582; font-weight: bold;">Switchers</span> moved to a non-teaching role within Arkansas public schools;
-- <span style="color: #B2182B; font-weight: bold;">Exiters</span> left the Arkansas public school system entirely.
+- <span style="color: #B2182B; font-weight: bold;">Exiters</span> left the Arkansas public school system entirely;
+- <span style="color: #67001F; font-weight: bold;">Retirees</span> retired from the Arkansas public school system.
 
 In 2025-26:
 
 - <span style="color: #053061; font-weight: bold;">77.1 percent</span> of teachers were Stayers;
-- <b>10.2 percent</b> of teachers were Movers who kept teaching but in a new school - <span style="color: #2166AC; font-weight: bold;"> 5.3 percent </span> within the same district and <span style="color: #92C5DE; font-weight: bold;">4.9 percent</span> in a new district.
+- <span style="color: #2166AC; font-weight: bold;"> 5.3 percent </span> of teachers moved to a new school within the same district;
+- <span style="color: #92C5DE; font-weight: bold;">4.9 percent</span> of teachers moved to a new district;
 - <span style="color: #F4A582; font-weight: bold;">3.5 percent</span> of teachers were Switchers;
-- <b>9.1 percent</b> of teachers were Exiters - <span style="color: #B2182B; font-weight: bold;">6.4 percent</span> left the Arkansas public school workforce and <span style="color: #67001F; font-weight: bold;">2.7 percent</span> retired.
+- <span style="color: #B2182B; font-weight: bold;">6.4 percent</span> of teachers left the Arkansas public school workforce;
+- <span style="color: #67001F; font-weight: bold;">2.7 percent</span> of teachers retired.
 
-The statewide retention rate combines all Movers and Stayers, since both groups remain teaching in Arkansas public schools. But stability in this overall rate obscures key patterns on the ground.
+The statewide retention rate shown in the first figure combines all Movers and Stayers, since both groups continue teaching in Arkansas public schools.
 
 ```js
 import { stackedBarChart } from "./components/stacked-bar-chart.js";
@@ -62,7 +66,7 @@ display(
 );
 ```
 
-## Exits, Not Retirements
+## Exits, not retirements, are driving lower retention.
 
 Teachers are exiting the Arkansas public school workforce at a higher rate than before the pandemic, but they're no more likely to retire. In 2025-26, only 2.7 percent of teachers retired. This mirrors last year's rate exactly and sits slightly below pre-pandemic levels.
 
@@ -179,13 +183,13 @@ display(
 );
 ```
 
-While exits drive most of the decline in retention, they aren't the only factor. Switchers drive the remaining retention gap. In 2025-26, the rate of teachers switching to non-teaching public school roles dropped by 0.2 pp, inching back towards pre-pandemic levels. This decrease continues a slow but steady pattern of decline - the Switcher rate is now down 0.8 percentage points from its 2022-23 peak.
+While exits drive most of the decline in retention, they aren't the only factor. Increased switchers explain the remaining retention gap. In 2025-26, the rate of teachers switching to non-teaching public school roles dropped by 0.2 percentage points, inching back towards pre-pandemic levels. This decrease continues a slow but steady pattern of decline - the Switcher rate is now down 0.8 percentage points from its 2022-23 peak.
 
-[Last year](https://oep.uark.edu/2024-25-arkansas-teacher-retention-statewide-stability-amid-ongoing-local-challenges/), we discussed how the January 2025 expiration of Federal ESSER (Elementary and Secondary School Emergency Relief) funds could lead to a dip in the Switcher rate, as some Arkansas districts may have used these funds for new non-teaching roles. That the Switcher rate remains elevated this year suggests some rigidity in districts' response to this expiration. Next year's data should reveal more of districts' adjustment to this funding loss.
+[Last year](https://oep.uark.edu/2024-25-arkansas-teacher-retention-statewide-stability-amid-ongoing-local-challenges/), we discussed how the January 2025 expiration of Federal ESSER (Elementary and Secondary School Emergency Relief) funds could lead to a dip in the Switcher rate, as some Arkansas districts may have used these funds to pay for new non-teaching roles. That the Switcher rate remains elevated this year suggests that districts may keep some of these new roles in place even after ESSER is fully expended. Next year's data should reveal more about the permanence of these staffing changes.
 
-## Teachers Are Staying Put
+## Teachers are changing jobs less.
 
-In 2025-26, a greater share of teachers remained in the same school than at any time in the last five years. The Stayer rate rose to 77.1 percent this year, up 0.8 percentage points from 2024-25 and almost 3 percentage points from the low-water mark of 2022-23.
+Despite retention that is below the pre-pandemic average, in 2025-26, a greater share of teachers remained in the same school than at any time in the last five years. The Stayer rate rose to 77.1 percent this year, up 0.8 percentage points from 2024-25 and almost 3 percentage points from the low-water mark of 2022-23.
 
 ```js
 const retainedCategories = [
@@ -200,13 +204,13 @@ const retainedDelta = computeBaselineDeltas(
 display(changeFromBaselineChart(retainedDelta, retainedCategories, { width }));
 ```
 
-As more teachers stayed, fewer moved to new districts. Only 4.9 percent of teachers taught in a new district this year, a 0.8 percentage point decrease from 2024-25. This means that even as statewide retention held steady, those teachers who were retained were more likely to stay in their own district - a sign of growing stability within schools.
+As more teachers stayed, fewer moved to new districts. Only 4.9 percent of teachers taught in a new district this year, a 0.8 percentage point decrease from 2024-25. This means that even as statewide retention held steady, those teachers who were retained were more likely to stay in the same district - a sign of growing stability within schools.
 
-## Geographic Shortage Area Districts Continue to Struggle
+## Geographic shortage area districts continue to struggle.
 
 At the district level, retention recovery remains uneven. Despite improvements for some of the state's lowest-retention districts, most geographic shortage area districts still experience higher-than-average turnover.
 
-The scatter plot below compares each district's average retention rate before the pandemic (2014-15 to 2019-20) against the three most recent years (2023-24 to 2025-26). Districts below the diagonal lag behind their pre-pandemic retention levels; districts above the diagonal have more than recovered. Districts highlighted in red were identified by the state as [high needs geographic shortage districts](https://docs.google.com/spreadsheets/d/1xnrhc6OGv_TY0lii191q3vys_eTs7RGt/edit?gid=1823429520#gid=1823429520) in 2025-26.
+The scatter plot below compares each district's average retention rate before the pandemic (2014-15 to 2019-20) to the three most recent years (2023-24 to 2025-26). Districts below the diagonal have retention that is lower than their pre-pandemic level; districts above the diagonal have more than recovered. Districts highlighted in red were identified by the state as [high needs geographic shortage districts](https://docs.google.com/spreadsheets/d/1xnrhc6OGv_TY0lii191q3vys_eTs7RGt/edit?gid=1823429520#gid=1823429520) in 2025-26.
 
 ```js
 import { districtScatterChart } from "./components/district-scatter-chart.js";
@@ -225,7 +229,7 @@ display(
 );
 ```
 
-Most 2025-26 geographic shortage districts measured below-average levels of retention over the last three years. On average, these districts retained only 77.1 percent of teachers - roughly 4.5 pp less than the average district in the state. Most of these districts experienced high levels of turnover before the pandemic as well, and while some have experienced large improvements in retention, 40 out of the 64 shortage area districts have lower retention now than before the pandemic.
+Most 2025-26 geographic shortage districts measured below-average levels of retention over the last three years. On average, these districts retained only 77.1 percent of teachers - roughly 4.5 percentage points less than the average district in the state. Most of these districts experienced high levels of turnover before the pandemic as well, and while some have experienced large improvements in retention, 40 out of the 64 shortage area districts have lower retention now than before the pandemic.
 
 Below, you can review our updated interactive tool to examine how 2025-26 retention looks in your district.
 
@@ -300,13 +304,26 @@ const csvData = district_retention_2026.map((d) => ({
 }));
 const blob = new Blob([d3.csvFormat(csvData)], { type: "text/csv" });
 const downloadUrl = URL.createObjectURL(blob);
-display(html`<p style="margin: 6px 0 0; font-size: 12px; color: #888; font-style: italic;"><a href="${downloadUrl}" download="OEP-Arkansas-District-Retention-2025-26.csv" style="color: inherit;">Download district data (CSV)</a></p>`);
+display(
+  html`<p
+    style="margin: 6px 0 0; font-size: 12px; color: #888; font-style: italic;"
+  >
+    <a
+      href="${downloadUrl}"
+      download="OEP-Arkansas-District-Retention-2025-26.csv"
+      style="color: inherit;"
+      >Download district data (CSV)</a
+    >
+  </p>`,
+);
 ```
 
-## What This Plateau Means
+## The story behind the statewide averages.
 
-Several years of post-pandemic data now reveal a new normal for Arkansas schools: lower retention rates, driven by higher exits among early- and mid-career teachers. But the most consistent pattern is that the teacher labor market continues to evolve. Teachers stay more and move less, switcher rates decline, and districts recover at uneven speeds.
+Several years of post-pandemic data now reveal a new normal for Arkansas schools: slightly lower retention rates driven by higher exits among early- and mid-career teachers. At the same time, teachers are staying in their current schools more and moving and switching less than in the years immediately following the pandemic. Underneath these statewide trends, districts vary a lot in their ability to recruit and retain teachers.
 
-Facing these challenges, Arkansas enacted major policies to bolster the teaching workforce - and they are showing signs of success. Early evidence suggests that [LEARNS salary increases](https://edre.uark.edu/_resources/pdf/changes-in-teacher-salaries-under-the-arkansas-learns-act-research-brief_nov2_final_rb2023-02.pdf) have [improved teacher retention](https://oep.uark.edu/raising-the-floor-early-evidence-suggests-learns-salary-increases-improved-teacher-retention/), particularly in rural and high-needs districts. Arkansas teachers are reporting [high levels of job satisfaction and success](https://oep.uark.edu/new-survey-results-show-arkansas-teachers-report-high-satisfaction-with-room-to-strengthen-support/).
+Arkansas has enacted several major policies to bolster the teaching workforce - and they are showing signs of success. Early evidence suggests that [LEARNS salary increases](https://edre.uark.edu/_resources/pdf/changes-in-teacher-salaries-under-the-arkansas-learns-act-research-brief_nov2_final_rb2023-02.pdf) have [improved teacher retention](https://oep.uark.edu/raising-the-floor-early-evidence-suggests-learns-salary-increases-improved-teacher-retention/), particularly in rural and high-needs districts. Arkansas teachers are reporting [high levels of job satisfaction and feelings of success](https://oep.uark.edu/new-survey-results-show-arkansas-teachers-report-high-satisfaction-with-room-to-strengthen-support/).
 
-But if teacher retention continues to plateau, Arkansas may need even more focused policies to address shortages. To inform these efforts, we will continue to examine the routes that teachers take into and out of the state's public schools. Better understanding these pathways can help us identify specific levers to help districts ensure they retain the teachers necessary to educate Arkansas students.
+Yet statewide averages mask wide variation across districts. Geographic shortage area districts retain, on average, 4.5 percentage points fewer teachers than the rest of the state - a gap that has persisted even as the overall picture stabilized. Addressing these disparities will require solutions tailored to the specific conditions facing low-retention districts and regions.
+
+In the posts that follow, we dig deeper into the patterns behind these gaps — examining which teachers are leaving, where they're going, and what distinguishes districts that have recovered from those that continue to struggle. Our goal is to help state and district leaders diagnose challenges and identify targeted levers that can help the districts and communities that need it most ensure they have the teachers their students deserve.
